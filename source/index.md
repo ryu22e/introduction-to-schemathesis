@@ -184,10 +184,35 @@ TODO スクショを貼る
 
 ## コード例紹介
 
-Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせてみよう
+Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせてみる。
 
-私が普段プロダクト開発に使っているDjango(+ Django REST framework）でAPIを作り、Schemathesisでテストを行うサンプルコードを作りました（このサンプルコードはSchemathesisの公式ドキュメントには載っていない、私が独自に調査して作ったものです）。
-このコードの内容を交えて、設定内容やハマりどころについて説明します。
+### Djangoアプリケーションを用意する
+
+以下のライブラリを使用。
+
+* Django REST framework
+* drf-spectacular（OpenAPIスキーマを生成する）
+
+### GitHubリポジトリの紹介
+
+以下のリポジトリを元に説明する。
+
+TODO URLを貼る
+
+### なぜテストが通らないのか？
+
+drf-spectacularが生成したOpenAPIスキーマのせい。
+
+### drf-spectacularの何が問題か
+
+* drf-spectacularは異常終了を考慮しない
+* SchemathesisはOpenAPIスキーマが絶対正しいという前提
+* 「そうか、どんな入力値でも絶対に200 OKなんだな！」と考える
+* でも、実際にはそうではないのでコケる
+
+### どうすればいいか
+
+drf-standardized-errorsを導入する。
 
 ## 「それで、結局Schemathesisがあれば人間はテストコードを書かなくてもよくなるの？」
 
