@@ -72,6 +72,25 @@ Hypothesisとは、Schemathesisの内部で使われている「プロパティ�
 * Hypothesisの簡単な使い方
 * 「プロパティベーステスト」がどのような考え方のテスト手法なのか
 
+### テスト対象のアプリケーション
+
+```{revealjs-code-block} python
+import fastapi
+from pydantic import BaseModel, StrictInt
+
+app = fastapi.FastAPI()
+
+class Values(BaseModel):
+    a: StrictInt
+    b: StrictInt
+
+@app.post("/div")
+async def div(values: Values):
+    """2つの整数を受け取り、その商を返すAPIエンドポイント"""
+    # 0で除算するケースを考慮していないのは「バグ」。
+    return {"result": values.a / values.b}
+```
+
 ## コード例紹介
 
 Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせてみよう
