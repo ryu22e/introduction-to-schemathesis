@@ -74,6 +74,8 @@ Hypothesisとは、Schemathesisの内部で使われている「プロパティ�
 
 ### テスト対象のアプリケーション
 
+以下のFastAPIアプリケーションを用意する。
+
 ```{revealjs-code-block} python
 import fastapi
 from pydantic import BaseModel, StrictInt
