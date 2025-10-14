@@ -48,14 +48,21 @@ PyCon mini 東海 2025資料
 
 ## Schemathesisの概要
 
-ここでは、Schemathesisの概要として、以下について説明します。
+### Schemathesisとは何か
 
-* Schemathesisの特徴
-* Schemathesisの簡単な使い方
-    * 簡単なAPIを用意する
-    * pytestとSchemathesisでAPIをテストする
-    * テストが失敗した際の挙動を見てみる
-    * コマンドラインインターフェースでAPIをテストしてみる
+Schemathesisとは、OpenAPIまたはGraphQLで書かれたAPI仕様を元にテストデータを自動生成し、実際にそれらのテストデータを使ってAPIを呼び出すことで、仕様通りの挙動になっているか検証できるツール。
+
+### どんなとき役立つか
+
+* 人間が書いたテストコードでは気付けないエッジケースを見つけられる
+* 仕様書と実装の乖離に気づくことができる
+
+### Schemathesisの簡単な使い方
+
+使い方は2通り：
+
+1. pytest経由で使う
+2. コマンドラインインターフェースで使う
 
 ## Hypothesisの概要
 
