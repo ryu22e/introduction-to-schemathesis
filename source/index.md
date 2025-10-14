@@ -64,14 +64,6 @@ Schemathesisとは、OpenAPIまたはGraphQLで書かれたAPI仕様を元にテ
 1. pytest経由で使う
 2. コマンドラインインターフェースで使う
 
-## Hypothesisの概要
-
-Hypothesisとは、Schemathesisの内部で使われている「プロパティベーステスト」を行うためのテストフレームワークです。
-ここでは、以下について説明します。
-
-* Hypothesisの簡単な使い方
-* 「プロパティベーステスト」がどのような考え方のテスト手法なのか
-
 ### テスト対象のアプリケーション
 
 以下のFastAPIアプリケーションを用意する。
@@ -181,6 +173,70 @@ async def div(values: Values):
 ### OpenAPIスキーマの内容
 
 TODO スクショを貼る
+
+### コマンドラインインターフェースを使う方法
+
+```{revealjs-code-block} bash
+$ schemathesis run http://127.0.0.1:8000/openapi.json
+Schemathesis dev
+━━━━━━━━━━━━━━━━
+
+ ✅  Loaded specification from http://127.0.0.1:8000/openapi.json (in 0.10s)
+
+     Base URL:         http://127.0.0.1:8000/
+     Specification:    Open API 3.1.0
+     Operations:       1 selected / 1 total
+
+ ✅  API capabilities:
+
+     Supports NULL byte in headers:    ✘
+
+ ⏭   Examples (in 0.11s)
+
+     ⏭  1 skipped
+
+ ✅  Coverage (in 0.40s)
+
+     ✅ 1 passed
+
+ ✅  Fuzzing (in 0.68s)
+
+     ✅ 1 passed
+
+===================================================================== SUMMARY ======================================================================
+
+API Operations:
+  Selected: 1/1
+  Tested: 1
+
+Test Phases:
+  ✅ API probing
+  ⏭  Examples
+  ✅ Coverage
+  ✅ Fuzzing
+  ⏭  Stateful (not applicable)
+
+Test cases:
+  128 generated, 128 passed
+
+Seed: 25425465587409846911775882801013537899
+
+============================================================= No issues found in 1.20s =============================================================
+```
+
+### SchemathesisはPythonで書かれていないアプリケーションにも使える
+
+* 結局、スキーマ定義を元にHTTPで通信しているだけ
+* テスト対象がどんな言語で書かれていても関係ない
+* ただし、WSGIまたはASGIで通信する方法もあって、こちらのほうが高速
+
+## Hypothesisの概要
+
+Hypothesisとは、Schemathesisの内部で使われている「プロパティベーステスト」を行うためのテストフレームワークです。
+ここでは、以下について説明します。
+
+* Hypothesisの簡単な使い方
+* 「プロパティベーステスト」がどのような考え方のテスト手法なのか
 
 ## コード例紹介
 
