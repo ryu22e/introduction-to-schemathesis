@@ -42,6 +42,9 @@ PyCon mini 東海 2025資料
 
 ### トークの構成
 
+* Schemathesisの概要
+* Hypothesisの概要
+* コード例紹介
 
 ## Schemathesisの概要
 
