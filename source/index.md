@@ -57,7 +57,7 @@ PyCon mini 東海 2025資料
     * テストが失敗した際の挙動を見てみる
     * コマンドラインインターフェースでAPIをテストしてみる
 
-## Hypothesis、「プロパティベーステスト」の概要
+## Hypothesisの概要
 
 Hypothesisとは、Schemathesisの内部で使われている「プロパティベーステスト」を行うためのテストフレームワークです。
 ここでは、以下について説明します。
@@ -65,7 +65,9 @@ Hypothesisとは、Schemathesisの内部で使われている「プロパティ�
 * Hypothesisの簡単な使い方
 * 「プロパティベーステスト」がどのような考え方のテスト手法なのか
 
-## Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせてみよう
+## コード例紹介
+
+Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせてみよう
 
 私が普段プロダクト開発に使っているDjango(+ Django REST framework）でAPIを作り、Schemathesisでテストを行うサンプルコードを作りました（このサンプルコードはSchemathesisの公式ドキュメントには載っていない、私が独自に調査して作ったものです）。
 このコードの内容を交えて、設定内容やハマりどころについて説明します。
