@@ -93,6 +93,95 @@ async def div(values: Values):
     return {"result": values.a / values.b}
 ```
 
+### テストコード
+
+```{revealjs-code-block} python
+import schemathesis
+
+# (1)OpenAPI仕様書のURLを指定してスキーマを生成
+schema = schemathesis.openapi.from_url("http://127.0.0.1:8000/openapi.json")
+
+# (2)スキーマと戦略の定義に基づいてテストケースを生成
+@schema.parametrize()
+def test_api(case):
+    """pytestでAPIのテストを実行する関数"""
+    # (3)Schemathesisが生成したテストケースを使用してAPIを呼び出し、
+    # 検証を行う
+    case.call_and_validate()
+```
+
+### テスト実行結果
+
+```{revealjs-code-block} bash
+$ pytest test_main.py -v
+============================= test session starts ==============================
+（省略）
+test_main.py::test_api[POST /div] FAILED                                 [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_api[POST /div] ______________________________
++ Exception Group Traceback (most recent call last):
+（省略）
+  | - Server error
+  | 
+  | - Undocumented HTTP status code
+  | 
+  |     Received: 500
+  |     Documented: 200, 422
+  | 
+  | [500] Internal Server Error:
+  | 
+  |     `Internal Server Error`
+  | 
+  | Reproduce with: 
+  | 
+  |     curl -X POST -H 'Content-Type: application/json' -d '{"a": 0, "b": 0}' http://127.0.0.1:8000/div
+  | 
+  |  (2 sub-exceptions)
+  +-+---------------- 1 ----------------
+    | schemathesis.core.failures.ServerError: Server error
+    +---------------- 2 ----------------
+    | schemathesis.openapi.checks.UndefinedStatusCode: Undocumented HTTP status code
+    | 
+    | Received: 500
+    | Documented: 200, 422
+    +------------------------------------
+=========================== short test summary info ============================
+FAILED test_main.py::test_api[POST /div]
+============================== 1 failed in 0.38s ===============================
+```
+
+### アプリケーションを修正
+
+`b`が0のときバリデーションエラーになるよう修正。
+
+```{revealjs-code-block} python
+import fastapi
+from pydantic import BaseModel, Field, StrictInt  # (1)Fieldをインポート
+
+app = fastapi.FastAPI()
+
+class Values(BaseModel):
+    a: StrictInt
+    # (2)Fieldを使用してOpenAPIの拡張を追加
+    b: StrictInt = Field(
+        ...,
+        description="0以外の整数",
+        json_schema_extra={
+            "not": {"const": 0}  # OpenAPI拡張：b != 0 の意味
+        }
+    )
+
+@app.post("/div")
+async def div(values: Values):
+    """2つの整数を受け取り、その商を返すAPIエンドポイント"""
+    return {"result": values.a / values.b}
+```
+
+### OpenAPIスキーマの内容
+
+TODO スクショを貼る
+
 ## コード例紹介
 
 Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせてみよう
