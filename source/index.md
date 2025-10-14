@@ -20,9 +20,18 @@ PyCon mini 東海 2025資料
 
 ### 今​日話すこと
 
+* Schemathesisの概要
+* Schemathesisの使い方
+* Django + Schemathesisの例
+
 ### 今日話さないこと
 
+* Pythonの文法
+* Pythonのユニットテストの書き方
+
 ### この​トークの​対象者
+
+* Pythonのユニットテストを書いたことがある人
 
 ### この​トークで​得られる​こと
 
