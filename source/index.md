@@ -172,7 +172,11 @@ async def div(values: Values):
 
 ### OpenAPIスキーマの内容
 
-TODO スクショを貼る
+```{figure} _static/img/openapi1.*
+:alt: OpenAPIスキーマの内容
+
+OpenAPIスキーマの内容
+```
 
 ### コマンドラインインターフェースを使う方法
 
