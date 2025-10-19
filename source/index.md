@@ -143,6 +143,14 @@ FAILED test_main.py::test_api[POST /div]
 ============================== 1 failed in 0.38s ===============================
 ```
 
+### なぜエラーになるのか
+
+```{figure} _static/img/openapi1.*
+:alt: OpenAPIスキーマの内容
+
+a, bは整数なら何でも受け付ける仕様になっている
+```
+
 ### アプリケーションを修正
 
 `b`が0のときバリデーションエラーになるよう修正。
@@ -170,12 +178,12 @@ async def div(values: Values):
     return {"result": values.a / values.b}
 ```
 
-### OpenAPIスキーマの内容
+### 修正後のOpenAPIスキーマの内容
 
-```{figure} _static/img/openapi1.*
+```{figure} _static/img/openapi2.*
 :alt: OpenAPIスキーマの内容
 
-OpenAPIスキーマの内容
+bは0を受け付けない仕様になった
 ```
 
 ### コマンドラインインターフェースを使う方法
