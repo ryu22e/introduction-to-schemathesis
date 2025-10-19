@@ -309,7 +309,14 @@ test_main.py
 
 ### 「プロパティベーステスト」がどのような考え方のテスト手法なのか
 
-参考図書：[実践プロパティベーステスト ― PropErとErlang/Elixirではじめよう](https://www.lambdanote.com/products/proper)
+* 従来のテストコード：
+  * 人間が「入力値」「期待する返却値」を考える
+* プロパティベーステスト：
+  * 人間「入力に対するコードの振る舞い」（プロパティ）を考え、テストデータの生成はツールに任せる
+
+### 「プロパティベーステスト」についての参考図書
+
+[実践プロパティベーステスト ― PropErとErlang/Elixirではじめよう](https://www.lambdanote.com/products/proper)
 
 ## コード例紹介
 
