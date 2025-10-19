@@ -242,6 +242,63 @@ Seed: 25425465587409846911775882801013537899
 * テスト対象がどんな言語で書かれていても関係ない
 * ただし、WSGIまたはASGIで通信する方法もあって、こちらのほうが高速
 
+### 別のバグを仕込んでみる
+
+```{revealjs-code-block} python
+...  # 省略
+@app.post("/div")
+async def div(values: Values):
+    """2つの整数を受け取り、その商を返すAPIエンドポイント"""
+    assert values.a < 1000000  # 大きな値を受け取ると発生するバグ
+    return {"result": values.a / values.b}
+```
+
+### テスト完了までかかる時間
+
+```{revealjs-code-block} bash
+$ time pytest test_main.py -v
+(省略)
+================================================================ short test summary info ================================================================
+FAILED test_main.py::test_api[POST /div]
+=================================================================== 1 failed in 1.45s ===================================================================
+pytest test_main.py -v  1.45s user 0.15s system 81% cpu 1.975 total
+```
+
+### テストを再実行してみる
+
+前回より終了時間が短い。
+
+```{revealjs-code-block} bash
+$ time pytest test_main.py -v
+(省略)
+================================================================ short test summary info ================================================================
+FAILED test_main.py::test_api[POST /div]
+=================================================================== 1 failed in 0.34s ===================================================================
+pytest test_main.py -v  0.56s user 0.10s system 78% cpu 0.843 total
+```
+
+### なぜ2回目は早く終わるのか？
+
+* Schemathesisは前回エラーになったテストデータをキャッシュしている
+* 2回目以降はキャッシュを元に、エラーになりそうなデータを優先的に実行する
+
+### キャッシュの場所
+
+```{revealjs-code-block} bash
+$ ls -1A                                [~/development/temp/schemathesis-example]
+__pycache__
+.hypothesis  # これがキャッシュ
+.pytest_cache
+main.py
+test_main.py
+```
+
+### なぜ「.hypothesis」？
+
+なぜ「.schemathesis」じゃないの？
+
+→答えは次のセクションで
+
 ## Hypothesisの概要
 
 Hypothesisとは、Schemathesisの内部で使われている「プロパティベーステスト」を行うためのテストフレームワークです。
