@@ -301,11 +301,15 @@ test_main.py
 
 ## Hypothesisの概要
 
-Hypothesisとは、Schemathesisの内部で使われている「プロパティベーステスト」を行うためのテストフレームワークです。
-ここでは、以下について説明します。
+### Hypothesisとは何か
 
-* Hypothesisの簡単な使い方
-* 「プロパティベーステスト」がどのような考え方のテスト手法なのか
+* [Hypothesis](https://hypothesis.readthedocs.io/en/latest/)の読み=ハイポセシス
+* Schemathesisが内部で利用しているテストフレームワーク
+* 「プロパティベーステスト」というテスト手法でテストできる
+
+### 「プロパティベーステスト」がどのような考え方のテスト手法なのか
+
+参考図書：[実践プロパティベーステスト ― PropErとErlang/Elixirではじめよう](https://www.lambdanote.com/products/proper)
 
 ## コード例紹介
 
