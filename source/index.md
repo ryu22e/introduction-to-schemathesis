@@ -342,6 +342,23 @@ Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせて�
 * Django REST framework
 * drf-spectacular（OpenAPIスキーマを生成する）
 
+### WSGIまたはASGIで通信する場合
+
+```{revealjs-code-block} python
+import pytest
+
+# または from example.asgi import application as app
+from example.wsgi import application as app
+
+@pytest.fixture
+def web_app(db):
+    """DjangoアプリケーションのWebアプリケーションを返す"""
+    return schemathesis.from_wsgi("/api/schema.json", app)
+
+# from_pytest_fixture()関数に上記の関数名を指定
+schema = schemathesis.from_pytest_fixture("web_app")
+```
+
 ### GitHubリポジトリの紹介
 
 以下のリポジトリを元に説明する。
