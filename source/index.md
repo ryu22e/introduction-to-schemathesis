@@ -242,6 +242,19 @@ Seed: 25425465587409846911775882801013537899
 * テスト対象がどんな言語で書かれていても関係ない
 * ただし、WSGIまたはASGIで通信する方法もあって、こちらのほうが高速
 
+### WSGIまたは​ASGIで​通信する​場合の書き方
+
+```{revealjs-code-block} python
+import schemathesis
+
+from main import app  # (1)FastAPIアプリケーションをインポート
+
+# (2)from_asgi関数にOpenAPI仕様書のパスとアプリケーションを渡す
+# またはschemathesis.openapi.from_wsgi()を使う
+schema = schemathesis.openapi.from_asgi("/openapi.json", app)
+...  # 省略
+```
+
 ### 別のバグを仕込んでみる
 
 ```{revealjs-code-block} python
