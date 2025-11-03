@@ -353,10 +353,10 @@ from example.wsgi import application as app
 @pytest.fixture
 def web_app(db):
     """DjangoアプリケーションのWebアプリケーションを返す"""
-    return schemathesis.from_wsgi("/api/schema.json", app)
+    return schemathesis.openapi.from_wsgi("/api/schema.json", app)
 
 # from_pytest_fixture()関数に上記の関数名を指定
-schema = schemathesis.from_pytest_fixture("web_app")
+schema = schemathesis.pytest.from_fixture("web_app")
 ```
 
 ### GitHubリポジトリの紹介
