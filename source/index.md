@@ -359,15 +359,42 @@ def web_app(db):
 schema = schemathesis.pytest.from_fixture("web_app")
 ```
 
-### GitHubリポジトリの紹介
+### pytestを実行してみると……
 
-以下のリポジトリを元に説明する。
-
-TODO URLを貼る
+```{revealjs-code-block} bash
+$ pytest
+（省略）
+  | - Undocumented HTTP status code
+  |
+  |     Received: 401
+  |     Documented: 201
+  |
+  | [401] Unauthorized:
+  |
+  |     `{"detail":"Invalid username/password."}`
+  |
+  | Reproduce with:
+  |
+  |     curl -X POST -H 'Content-Type: application/json' -d 0 --insecure http://localhost/books/
+  |
+  |  (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | schemathesis.openapi.checks.UndefinedStatusCode: Undocumented HTTP status code
+    |
+    | Received: 401
+    | Documented: 201
+    +------------------------------------
+```
 
 ### なぜテストが通らないのか？
 
 drf-spectacularが生成したOpenAPIスキーマのせい。
+
+```{figure} _static/img/django-openapi.*
+:alt: drf-spectacularが生成したOpenAPIスキーマ
+
+スキーマ上はどんなリクエストも200を返す仕様になっている
+```
 
 ### drf-spectacularの何が問題か
 
