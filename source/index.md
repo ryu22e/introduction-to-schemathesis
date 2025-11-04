@@ -325,11 +325,59 @@ test_main.py
 * 従来のテストコード：
   * 人間が「入力値」「期待する返却値」を考える
 * プロパティベーステスト：
-  * 人間「入力に対するコードの振る舞い」（プロパティ）を考え、テストデータの生成はツールに任せる
+  * 人間が「入力に対するコードの振る舞い」（プロパティ）を考え、テストデータの生成はツールに任せる
+
+### プロパティベーステストの例
+
+以下の関数のテストをやってみる。
+
+```{revealjs-code-block} python
+def div(a, b):
+    return a / b
+```
+
+### 従来のテストコードを書く場合
+
+人間が「入力値」「期待する返却値」を考える。
+
+```{revealjs-code-block} python
+import pytest
+
+@pytest.mark.parametrize(
+    "a, b, expected",
+    [
+        (10, 2, 5),
+        (7, 2, 3.5),
+        (6, -3, -2),
+        (123.456, 1, 123.456),
+    ],
+)
+def test_div(a, b, expected):
+    """通常の除算が期待通りに動作するかを確認"""
+    assert div(a, b) == expected
+```
+
+### プロパティベーステストの場合
+
+```{revealjs-code-block} python
+import pytest
+from hypothesis import given, strategies as st
+
+@given(a=st.floats(allow_infinity=False, allow_nan=False),
+       b=st.floats(allow_infinity=False, allow_nan=False))
+def test_div_basic_property(a, b):
+    result = div(a, b)
+    # 浮動小数誤差を考慮して、a ≈ result * b が成り立つ
+    assert pytest.approx(a, rel=1e-9, abs=1e-9) == result * b
+```
 
 ### 「プロパティベーステスト」についての参考図書
 
 [実践プロパティベーステスト ― PropErとErlang/Elixirではじめよう](https://www.lambdanote.com/products/proper)
+
+### 「プロパティベーステスト」は難しい、が……
+
+SchemathesisはOpenAPIやGraphQLのスキーマを読ませるだけで使えるので簡単。
 
 ## コード例紹介
 
@@ -438,4 +486,8 @@ Schemathesisはテストコードを自動生成してくれる。
 
 ### ご清聴ありがとうございました
 
-TODO 画像を貼る
+```{figure} _static/img/thank-you-for-your-attention.*
+:alt: schemathesisで高品質のAPIを開発する有能エンジニアたち
+
+schemathesisで高品質のAPIを開発する有能エンジニアたち
+```
