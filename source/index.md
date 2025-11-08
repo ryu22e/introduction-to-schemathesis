@@ -404,6 +404,7 @@ from example.wsgi import application as app
 @pytest.fixture
 def web_app(db):
     """DjangoアプリケーションのWebアプリケーションを返す"""
+    # ASGIオブジェクトならfrom_asgi()関数を使う
     return schemathesis.openapi.from_wsgi("/api/schema.json", app)
 
 # from_pytest_fixture()関数に上記の関数名を指定
