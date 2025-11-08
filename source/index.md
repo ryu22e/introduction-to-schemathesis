@@ -188,6 +188,8 @@ bは0を受け付けない仕様になった
 
 ### コマンドラインインターフェースを使う方法
 
+schemathesisまたはstコマンドを使う。
+
 ```{revealjs-code-block} bash
 $ schemathesis run http://127.0.0.1:8000/openapi.json
 Schemathesis dev
