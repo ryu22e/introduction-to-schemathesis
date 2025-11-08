@@ -157,7 +157,7 @@ a, bは整数なら何でも受け付ける仕様になっている
 
 ```{revealjs-code-block} python
 import fastapi
-from pydantic import BaseModel, Field, StrictInt  # (1)Fieldをインポート
+from pydantic import BaseModel, Field, StrictInt, field_validator  # (1)Field, field_validatorをインポート
 
 app = fastapi.FastAPI()
 
@@ -172,6 +172,13 @@ class Values(BaseModel):
         }
     )
 
+    @field_validator("b")
+    @classmethod
+    def b_must_not_be_zero(cls, v: int) -> int:
+        if v == 0:
+            # ここで ValueError を出しておくと FastAPI が 422 にしてくれる
+            raise ValueError("b must not be 0")
+
 @app.post("/div")
 async def div(values: Values):
     """2つの整数を受け取り、その商を返すAPIエンドポイント"""
@@ -184,6 +191,23 @@ async def div(values: Values):
 :alt: OpenAPIスキーマの内容
 
 bは0を受け付けない仕様になった
+```
+
+### 修正後のテスト実行結果
+
+```{revealjs-code-block} bash
+$ pytest test_main.py -v
+================================================================== test session starts ==================================================================
+platform darwin -- Python 3.13.9, pytest-8.4.2, pluggy-1.6.0 -- /Users/ryu22e/development/temp/schemathesis-example/.direnv/python-venv-3.13.9/bin/python3.13
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /Users/ryu22e/development/temp/schemathesis-example
+plugins: schemathesis-4.4.3, hypothesis-6.142.1, anyio-4.11.0, subtests-0.14.2
+collected 1 item
+
+test_main.py::test_api[POST /div] PASSED                                                                                                          [100%]
+
+=================================================================== 1 passed in 1.02s ===================================================================
 ```
 
 ### コマンドラインインターフェースを使う方法
