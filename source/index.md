@@ -389,6 +389,9 @@ Django(+ Django REST framework）製のAPIとSchemathesisを組み合わせて�
 
 * Django REST framework
 * drf-spectacular（OpenAPIスキーマを生成する）
+* pytest
+* pytest-django
+* schemathesis
 
 ### WSGIまたはASGIで通信する場合
 
@@ -414,8 +417,8 @@ $ pytest
 （省略）
   | - Undocumented HTTP status code
   |
-  |     Received: 401
-  |     Documented: 201
+  |     Received: 400
+  |     Documented: 200
   |
   | [401] Unauthorized:
   |
@@ -423,14 +426,14 @@ $ pytest
   |
   | Reproduce with:
   |
-  |     curl -X POST -H 'Content-Type: application/json' -d 0 --insecure http://localhost/books/
+  |     curl -X GET -H 'Content-Type: application/json' -d 0 --insecure http://localhost/books/
   |
   |  (1 sub-exception)
   +-+---------------- 1 ----------------
     | schemathesis.openapi.checks.UndefinedStatusCode: Undocumented HTTP status code
     |
     | Received: 401
-    | Documented: 201
+    | Documented: 200
     +------------------------------------
 ```
 
