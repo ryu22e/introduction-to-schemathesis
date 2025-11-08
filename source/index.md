@@ -172,6 +172,7 @@ class Values(BaseModel):
         }
     )
 
+    # (3)このメソッドを追加
     @field_validator("b")
     @classmethod
     def b_must_not_be_zero(cls, v: int) -> int:
